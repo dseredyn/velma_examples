@@ -79,22 +79,34 @@ class ExampleControl:
         result = velma.waitForHandLeft()
         print "result:", result.error_code
 
-        velma.updateTransformations()
-
-        T_B_W1 = velma.T_B_W
-
-        T_B_W2 = PyKDL.Frame(PyKDL.Vector(0.2,0,0)) * T_B_W1
-
         velma.switchToCart()
 
-        velma.moveWrist(T_B_W2, 3.0, Wrench(Vector3(40,40,40), Vector3(14,14,14)), start_time=0.1)
-        print "wainting for moveWrist complete..."
-        result = velma.waitForWrist()
+        velma.updateTransformations()
+        T_B_Wr1 = velma.T_B_Wr
+        T_B_Wr2 = PyKDL.Frame(PyKDL.Vector(0.2,0,0)) * T_B_Wr1
+
+        velma.moveWristRight(T_B_Wr2, 3.0, Wrench(Vector3(40,40,40), Vector3(14,14,14)), start_time=0.1)
+        print "wainting for moveWristRight complete..."
+        result = velma.waitForWristRight()
         print "result:", result.error_code
 
-        velma.moveWrist(T_B_W1, 3.0, Wrench(Vector3(40,40,40), Vector3(14,14,14)), start_time=0.1)
-        print "wainting for moveWrist complete..."
-        result = velma.waitForWrist()
+        velma.moveWristRight(T_B_Wr1, 3.0, Wrench(Vector3(40,40,40), Vector3(14,14,14)), start_time=0.1)
+        print "wainting for moveWristRight complete..."
+        result = velma.waitForWristRight()
+        print "result:", result.error_code
+
+        velma.updateTransformations()
+        T_B_Wl1 = velma.T_B_Wl
+        T_B_Wl2 = PyKDL.Frame(PyKDL.Vector(0,0,0.2)) * T_B_Wl1
+
+        velma.moveWristLeft(T_B_Wl2, 3.0, Wrench(Vector3(40,40,40), Vector3(14,14,14)), start_time=0.1)
+        print "wainting for moveWristLeft complete..."
+        result = velma.waitForWristLeft()
+        print "result:", result.error_code
+
+        velma.moveWristLeft(T_B_Wl1, 3.0, Wrench(Vector3(40,40,40), Vector3(14,14,14)), start_time=0.1)
+        print "wainting for moveWristLeft complete..."
+        result = velma.waitForWristLeft()
         print "result:", result.error_code
 
         raw_input("Press ENTER to exit...")
